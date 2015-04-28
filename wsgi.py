@@ -117,6 +117,27 @@ class Hello(object):
     '''
 
         return outstring
+    #@+node:.20150428103902.1770: *3* index2
+    @cherrypy.expose
+    def index2(self):
+        outstring = '''
+    <form method=POST action=reindex2>
+    模數:<input type=text name=M><br />
+    壓力角:<input type=text name=P><br />
+    齒數:<input type=text name=N><br />
+    <input type=submit value=send>
+    '''
+
+
+
+        return outstring
+    #@+node:.20150428103902.1772: *3* reindex2
+    @cherrypy.expose
+    def reindex2(self, M, P,N):
+        return '模數:'+M+ '壓力角:'+P+ '齒數:'+N
+
+
+     
     #@+node:2015.20150330144929.1713: *3* twoDgear
     @cherrypy.expose
     # N 為齒數, M 為模數, P 為壓力角
@@ -455,7 +476,7 @@ class Hello(object):
     #@+node:amd.20150415215023.1: *3* mygeartest2
     @cherrypy.expose
     # N 為齒數, M 為模數, P 為壓力角
-    def mygeartest2(self , M=5, P=15,N1=20, N2=20,N3=20):
+    def mygeartest2(self , M=5, P=15,N1=20):
         outstring = '''
     <!DOCTYPE html> 
     <html>
@@ -472,8 +493,6 @@ class Hello(object):
     模數:<input type=text name=M><br />
     壓力角:<input type=text name=P><br />
     齒輪1齒數:<input type=text name=N1><br />
-    齒輪2齒數:<input type=text name=N2><br />
-    齒輪3齒數:<input type=text name=N3><br />
     <input type=submit value=send>
     </form>
 
@@ -500,24 +519,15 @@ class Hello(object):
     m = '''+str(M)+'''
     # 第1齒輪齒數
     n_g1 = '''+str(N1)+'''
-    # 第2齒輪齒數
-    n_g2 = '''+str(N2)+'''
-    # 第3齒輪齒數
-    n_g3 = '''+str(N3)+'''
+
     # 計算兩齒輪的節圓半徑
     rp_g1 = m*n_g1/2
-    rp_g2 = m*n_g2/2
-    rp_g3 = m*n_g3/2
+
 
     # 繪圖第1齒輪的圓心座標
     x_g1 = 400
     y_g1 = 400
-    # 第2齒輪的圓心座標, 假設排列成水平, 表示各齒輪圓心 y 座標相同
-    x_g2 = x_g1 + rp_g1 + rp_g2
-    y_g2 = y_g1
-    # 第3齒輪的圓心座標
-    x_g3 = x_g1 + rp_g1 + 2*rp_g2 + rp_g3
-    y_g3 = y_g1
+
 
     # 將第1齒輪順時鐘轉 90 度
     # 使用 ctx.save() 與 ctx.restore() 以確保各齒輪以相對座標進行旋轉繪圖
